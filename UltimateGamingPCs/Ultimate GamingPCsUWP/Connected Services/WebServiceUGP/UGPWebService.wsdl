@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetPcDetails">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ProductCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPcDetailsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetPcDetailsResult" type="tns:PcDetails" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PcDetails">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ProductCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductTitle" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductDescription" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ProductPrice" type="s:decimal" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetPcDetailsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPcDetails" />
+  </wsdl:message>
+  <wsdl:message name="GetPcDetailsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPcDetailsResponse" />
+  </wsdl:message>
+  <wsdl:portType name="UGPWebServiceSoap">
+    <wsdl:operation name="GetPcDetails">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This method call will get the product Title, it's description and current sales price. </wsdl:documentation>
+      <wsdl:input message="tns:GetPcDetailsSoapIn" />
+      <wsdl:output message="tns:GetPcDetailsSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="UGPWebServiceSoap" type="tns:UGPWebServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetPcDetails">
+      <soap:operation soapAction="http://tempuri.org/GetPcDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="UGPWebServiceSoap12" type="tns:UGPWebServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetPcDetails">
+      <soap12:operation soapAction="http://tempuri.org/GetPcDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="UGPWebService">
+    <wsdl:port name="UGPWebServiceSoap" binding="tns:UGPWebServiceSoap">
+      <soap:address location="http://localhost:50858/UGPWebService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="UGPWebServiceSoap12" binding="tns:UGPWebServiceSoap12">
+      <soap12:address location="http://localhost:50858/UGPWebService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
